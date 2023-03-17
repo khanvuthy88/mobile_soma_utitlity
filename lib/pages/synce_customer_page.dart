@@ -27,9 +27,18 @@ class _PullCustomerPageState extends State<PullCustomerPage> {
                 color: Colors.blue,
                 borderRadius: BorderRadius.circular(4)
             ),
-            child: Text("PULL CUSTOMER", style: Theme.of(context).textTheme.titleMedium!.copyWith(
-              color: Colors.white,
-            ), textAlign: TextAlign.center,),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(Icons.download, color: Colors.white),
+                const SizedBox(width: 10),
+                Text("PULL CUSTOMER",
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            )
           ),
         ),
       ),

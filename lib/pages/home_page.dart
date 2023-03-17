@@ -29,7 +29,7 @@ class _HomePageState extends State<HomePage> {
             ),
             ListTile(
               leading: const Icon(Icons.download, color: Colors.blue,),
-              title: const Text("Pull zone"),
+              title: Text("Pull zone"),
               onTap: (){
                 Navigator.push(context, MaterialPageRoute(builder: (context) => const PullZonePage()));
               },

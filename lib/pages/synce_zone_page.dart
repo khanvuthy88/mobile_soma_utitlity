@@ -28,9 +28,18 @@ class _PullZonePageState extends State<PullZonePage> {
               color: Colors.blue,
               borderRadius: BorderRadius.circular(4)
             ),
-            child: Text("PULL ZONE", style: Theme.of(context).textTheme.titleMedium!.copyWith(
-              color: Colors.white,
-            ), textAlign: TextAlign.center,),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(Icons.download, color: Colors.white),
+                const SizedBox(width: 10),
+                Text("PULL ZONE",
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            )
           ),
         ),
       ),
