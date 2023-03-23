@@ -11,7 +11,7 @@ class ZoneProvider extends ChangeNotifier{
   }
 
   List<ZoneModelData> _zoneList = [];
-  UnmodifiableListView<ZoneModelData> get zoneList => UnmodifiableListView(_zoneList);
+  List<ZoneModelData> get zoneList => _zoneList;
   List<ZoneModelData> _zoneListStream = [];
   UnmodifiableListView<ZoneModelData> get zoneListStream => UnmodifiableListView(_zoneListStream);
   ZoneModelData? _zoneData;
@@ -29,10 +29,11 @@ class ZoneProvider extends ChangeNotifier{
   void getZonesFuture(){
     _appDb?.getZones().then((value){
       _zoneList = value;
+      notifyListeners();
     }).onError((error, stackTrace){
       _stringError = error.toString();
+      notifyListeners();
     });
-    notifyListeners();
   }
   void getZonesStream(){
     _appDb?.getZonesStream().listen((event) {
@@ -48,9 +49,10 @@ class ZoneProvider extends ChangeNotifier{
     });
     notifyListeners();
   }
-  void newZone(ZoneModelCompanion zone){
+  Future<void> newZone(ZoneModelCompanion zone)async {
     _appDb?.newZone(zone).then((value){
       _added = value == 1 ? true : false;
+      notifyListeners();
     }).onError((error, stackTrace){
       _stringError = error.toString();
     });
@@ -68,6 +70,15 @@ class ZoneProvider extends ChangeNotifier{
     _appDb?.removeZone(id).then((value){
       _isDeleted = value == 1 ? true : false;
     }).onError((error, stackTrace) {
+      _stringError = error.toString();
+    });
+    notifyListeners();
+  }
+
+  Future<void> emptyZones() async {
+    _appDb?.emptyZones().then((value){
+      _isDeleted = value == 1 ? true: false;
+    }).onError((error, stackTrace){
       _stringError = error.toString();
     });
     notifyListeners();
