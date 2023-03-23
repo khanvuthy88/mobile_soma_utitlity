@@ -1,6 +1,6 @@
 import 'package:odoo_rpc/odoo_rpc.dart';
 
-final odooHost = OdooClient('https://website-uat.odoo.com');
-const odooDatabase = 'all-soma-group-odoo13-uat-7643888';
+final odooHost = OdooClient('https://smg-live.odoo.com');
+const odooDatabase = 'www-khmerdev-com-all-soma-group-master-1180948';
 const odooUsername = 'admin';
 const odooPassword = 'r?PN3zy7r\$#xGAKtad';

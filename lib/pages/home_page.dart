@@ -84,7 +84,7 @@ class _HomePageState extends State<HomePage> {
           ),
           ListTile(
             leading: const Icon(Icons.list, color: Colors.blue),
-            title: const Text('Customer List'),
+            title: const Text('អតិថិជនទាំងអស់'),
             onTap: (){
               Navigator.push(context, MaterialPageRoute(builder: (context) => const CustomerPage()));
             },
