@@ -24,6 +24,7 @@ class AppDb extends _$AppDb {
   @override
   int get schemaVersion => 1;
 
+
   Future<List<ZoneModelData>> getZones() async {
     return await select(zoneModel).get();
   }
@@ -33,18 +34,29 @@ class AppDb extends _$AppDb {
   Future<bool> updateZone(ZoneModelCompanion zone) async {
     return await update(zoneModel).replace(zone);
   }
+  Future<void> zoneBatchInsert(List<ZoneModelCompanion> zoneData) async {
+    await batch((batch){
+      batch.insertAll(zoneModel, zoneData);
+    });
+  }
   Future<int> newZone(ZoneModelCompanion zone) async {
     return await into(zoneModel).insert(zone);
   }
   Future<int> removeZone(int id) async {
     return await (delete(zoneModel)..where((tbl) => tbl.id.equals(id))).go();
   }
+  Future<int> emptyZones() async {
+    return await (delete(zoneModel)).go();
+  }
   Stream<List<ZoneModelData>> getZonesStream() {
     return select(zoneModel).watch();
   }
 
   Future<List<CustomerModelData>> getCustomers() async {
-    return await select(customerModel).get();
+    return await (select(customerModel)..orderBy([(t) => OrderingTerm(expression: t.locationCode)])).get();
+  }
+  Future<List<CustomerModelData>> getCustomerByZone(int zoneId) async {
+    return await (select(customerModel)..where((tbl) => tbl.odooZoneId.equals(zoneId))).get();
   }
   Stream<List<CustomerModelData>> getCustomersStream() {
     return select(customerModel).watch();
@@ -55,11 +67,19 @@ class AppDb extends _$AppDb {
   Future<bool> updateCustomer(CustomerModelCompanion customer) async {
     return await update(customerModel).replace(customer);
   }
+  Future<void> customerBatchInsert(List<CustomerModelCompanion> customerData) async {
+    await batch((batch){
+      batch.insertAll(customerModel, customerData);
+    });
+  }
   Future<int> newCustomer(CustomerModelCompanion customer) async {
     return await into(customerModel).insert(customer);
   }
   Future<int> removeCustomer(int id) async {
     return await (delete(customerModel)..where((tbl) => tbl.id.equals(id))).go();
+  }
+  Future<int> emptyCustomer() async {
+    return await (delete(customerModel)).go();
   }
 
 }

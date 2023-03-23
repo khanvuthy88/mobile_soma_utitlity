@@ -228,28 +228,50 @@ class $CustomerModelTable extends CustomerModel
   late final GeneratedColumn<String> name = GeneratedColumn<String>(
       'name', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _khmerNameMeta =
-      const VerificationMeta('khmerName');
+  static const VerificationMeta _meterMeta = const VerificationMeta('meter');
   @override
-  late final GeneratedColumn<String> khmerName = GeneratedColumn<String>(
-      'khmer_name', aliasedName, true,
+  late final GeneratedColumn<String> meter = GeneratedColumn<String>(
+      'meter_id', aliasedName, true,
       type: DriftSqlType.string, requiredDuringInsert: false);
-  static const VerificationMeta _locationIdMeta =
-      const VerificationMeta('locationId');
+  static const VerificationMeta _stationMeta =
+      const VerificationMeta('station');
   @override
-  late final GeneratedColumn<int> locationId = GeneratedColumn<int>(
-      'location_id', aliasedName, true,
+  late final GeneratedColumn<String> station = GeneratedColumn<String>(
+      'station', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _villageMeta =
+      const VerificationMeta('village');
+  @override
+  late final GeneratedColumn<String> village = GeneratedColumn<String>(
+      'village', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _odooIDMeta = const VerificationMeta('odooID');
+  @override
+  late final GeneratedColumn<int> odooID = GeneratedColumn<int>(
+      'odoo_id', aliasedName, true,
       type: DriftSqlType.int, requiredDuringInsert: false);
-  static const VerificationMeta _zoneNameMeta =
-      const VerificationMeta('zoneName');
+  static const VerificationMeta _odooZoneIdMeta =
+      const VerificationMeta('odooZoneId');
   @override
-  late final GeneratedColumn<String> zoneName = GeneratedColumn<String>(
-      'zone_name', aliasedName, true,
+  late final GeneratedColumn<int> odooZoneId = GeneratedColumn<int>(
+      'odoo_zone_id', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _zoneMeta = const VerificationMeta('zone');
+  @override
+  late final GeneratedColumn<String> zone = GeneratedColumn<String>(
+      'zone', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _locationCodeMeta =
+      const VerificationMeta('locationCode');
+  @override
+  late final GeneratedColumn<String> locationCode = GeneratedColumn<String>(
+      'location_code', aliasedName, true,
       type: DriftSqlType.string, requiredDuringInsert: false);
-  static const VerificationMeta _zoneIdMeta = const VerificationMeta('zoneId');
+  static const VerificationMeta _previousConsumptionMeta =
+      const VerificationMeta('previousConsumption');
   @override
-  late final GeneratedColumn<int> zoneId = GeneratedColumn<int>(
-      'zone_id', aliasedName, true,
+  late final GeneratedColumn<int> previousConsumption = GeneratedColumn<int>(
+      'previous_consumption', aliasedName, true,
       type: DriftSqlType.int, requiredDuringInsert: false);
   static const VerificationMeta _newConsumptionMeta =
       const VerificationMeta('newConsumption');
@@ -257,29 +279,26 @@ class $CustomerModelTable extends CustomerModel
   late final GeneratedColumn<int> newConsumption = GeneratedColumn<int>(
       'new_consumption', aliasedName, true,
       type: DriftSqlType.int, requiredDuringInsert: false);
-  static const VerificationMeta _prevConsumptionMeta =
-      const VerificationMeta('prevConsumption');
+  static const VerificationMeta _usageConsumptionMeta =
+      const VerificationMeta('usageConsumption');
   @override
-  late final GeneratedColumn<int> prevConsumption = GeneratedColumn<int>(
-      'prev_consumption', aliasedName, true,
-      type: DriftSqlType.int, requiredDuringInsert: false);
-  static const VerificationMeta _totalConsumptionMeta =
-      const VerificationMeta('totalConsumption');
-  @override
-  late final GeneratedColumn<int> totalConsumption = GeneratedColumn<int>(
-      'total_consumption', aliasedName, true,
+  late final GeneratedColumn<int> usageConsumption = GeneratedColumn<int>(
+      'usage_consumption', aliasedName, true,
       type: DriftSqlType.int, requiredDuringInsert: false);
   @override
   List<GeneratedColumn> get $columns => [
         id,
         name,
-        khmerName,
-        locationId,
-        zoneName,
-        zoneId,
+        meter,
+        station,
+        village,
+        odooID,
+        odooZoneId,
+        zone,
+        locationCode,
+        previousConsumption,
         newConsumption,
-        prevConsumption,
-        totalConsumption
+        usageConsumption
       ];
   @override
   String get aliasedName => _alias ?? 'customer_model';
@@ -299,23 +318,51 @@ class $CustomerModelTable extends CustomerModel
     } else if (isInserting) {
       context.missing(_nameMeta);
     }
-    if (data.containsKey('khmer_name')) {
-      context.handle(_khmerNameMeta,
-          khmerName.isAcceptableOrUnknown(data['khmer_name']!, _khmerNameMeta));
+    if (data.containsKey('meter_id')) {
+      context.handle(_meterMeta,
+          meter.isAcceptableOrUnknown(data['meter_id']!, _meterMeta));
     }
-    if (data.containsKey('location_id')) {
+    if (data.containsKey('station')) {
+      context.handle(_stationMeta,
+          station.isAcceptableOrUnknown(data['station']!, _stationMeta));
+    } else if (isInserting) {
+      context.missing(_stationMeta);
+    }
+    if (data.containsKey('village')) {
+      context.handle(_villageMeta,
+          village.isAcceptableOrUnknown(data['village']!, _villageMeta));
+    } else if (isInserting) {
+      context.missing(_villageMeta);
+    }
+    if (data.containsKey('odoo_id')) {
+      context.handle(_odooIDMeta,
+          odooID.isAcceptableOrUnknown(data['odoo_id']!, _odooIDMeta));
+    }
+    if (data.containsKey('odoo_zone_id')) {
       context.handle(
-          _locationIdMeta,
-          locationId.isAcceptableOrUnknown(
-              data['location_id']!, _locationIdMeta));
+          _odooZoneIdMeta,
+          odooZoneId.isAcceptableOrUnknown(
+              data['odoo_zone_id']!, _odooZoneIdMeta));
+    } else if (isInserting) {
+      context.missing(_odooZoneIdMeta);
     }
-    if (data.containsKey('zone_name')) {
-      context.handle(_zoneNameMeta,
-          zoneName.isAcceptableOrUnknown(data['zone_name']!, _zoneNameMeta));
+    if (data.containsKey('zone')) {
+      context.handle(
+          _zoneMeta, zone.isAcceptableOrUnknown(data['zone']!, _zoneMeta));
+    } else if (isInserting) {
+      context.missing(_zoneMeta);
     }
-    if (data.containsKey('zone_id')) {
-      context.handle(_zoneIdMeta,
-          zoneId.isAcceptableOrUnknown(data['zone_id']!, _zoneIdMeta));
+    if (data.containsKey('location_code')) {
+      context.handle(
+          _locationCodeMeta,
+          locationCode.isAcceptableOrUnknown(
+              data['location_code']!, _locationCodeMeta));
+    }
+    if (data.containsKey('previous_consumption')) {
+      context.handle(
+          _previousConsumptionMeta,
+          previousConsumption.isAcceptableOrUnknown(
+              data['previous_consumption']!, _previousConsumptionMeta));
     }
     if (data.containsKey('new_consumption')) {
       context.handle(
@@ -323,17 +370,11 @@ class $CustomerModelTable extends CustomerModel
           newConsumption.isAcceptableOrUnknown(
               data['new_consumption']!, _newConsumptionMeta));
     }
-    if (data.containsKey('prev_consumption')) {
+    if (data.containsKey('usage_consumption')) {
       context.handle(
-          _prevConsumptionMeta,
-          prevConsumption.isAcceptableOrUnknown(
-              data['prev_consumption']!, _prevConsumptionMeta));
-    }
-    if (data.containsKey('total_consumption')) {
-      context.handle(
-          _totalConsumptionMeta,
-          totalConsumption.isAcceptableOrUnknown(
-              data['total_consumption']!, _totalConsumptionMeta));
+          _usageConsumptionMeta,
+          usageConsumption.isAcceptableOrUnknown(
+              data['usage_consumption']!, _usageConsumptionMeta));
     }
     return context;
   }
@@ -348,20 +389,26 @@ class $CustomerModelTable extends CustomerModel
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
       name: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
-      khmerName: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}khmer_name']),
-      locationId: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}location_id']),
-      zoneName: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}zone_name']),
-      zoneId: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}zone_id']),
+      meter: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}meter_id']),
+      station: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}station'])!,
+      village: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}village'])!,
+      odooID: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}odoo_id']),
+      odooZoneId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}odoo_zone_id'])!,
+      zone: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}zone'])!,
+      locationCode: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}location_code']),
+      previousConsumption: attachedDatabase.typeMapping.read(
+          DriftSqlType.int, data['${effectivePrefix}previous_consumption']),
       newConsumption: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}new_consumption']),
-      prevConsumption: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}prev_consumption']),
-      totalConsumption: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}total_consumption']),
+      usageConsumption: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}usage_consumption']),
     );
   }
 
@@ -375,48 +422,55 @@ class CustomerModelData extends DataClass
     implements Insertable<CustomerModelData> {
   final int id;
   final String name;
-  final String? khmerName;
-  final int? locationId;
-  final String? zoneName;
-  final int? zoneId;
+  final String? meter;
+  final String station;
+  final String village;
+  final int? odooID;
+  final int odooZoneId;
+  final String zone;
+  final String? locationCode;
+  final int? previousConsumption;
   final int? newConsumption;
-  final int? prevConsumption;
-  final int? totalConsumption;
+  final int? usageConsumption;
   const CustomerModelData(
       {required this.id,
       required this.name,
-      this.khmerName,
-      this.locationId,
-      this.zoneName,
-      this.zoneId,
+      this.meter,
+      required this.station,
+      required this.village,
+      this.odooID,
+      required this.odooZoneId,
+      required this.zone,
+      this.locationCode,
+      this.previousConsumption,
       this.newConsumption,
-      this.prevConsumption,
-      this.totalConsumption});
+      this.usageConsumption});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
     map['name'] = Variable<String>(name);
-    if (!nullToAbsent || khmerName != null) {
-      map['khmer_name'] = Variable<String>(khmerName);
+    if (!nullToAbsent || meter != null) {
+      map['meter_id'] = Variable<String>(meter);
     }
-    if (!nullToAbsent || locationId != null) {
-      map['location_id'] = Variable<int>(locationId);
+    map['station'] = Variable<String>(station);
+    map['village'] = Variable<String>(village);
+    if (!nullToAbsent || odooID != null) {
+      map['odoo_id'] = Variable<int>(odooID);
     }
-    if (!nullToAbsent || zoneName != null) {
-      map['zone_name'] = Variable<String>(zoneName);
+    map['odoo_zone_id'] = Variable<int>(odooZoneId);
+    map['zone'] = Variable<String>(zone);
+    if (!nullToAbsent || locationCode != null) {
+      map['location_code'] = Variable<String>(locationCode);
     }
-    if (!nullToAbsent || zoneId != null) {
-      map['zone_id'] = Variable<int>(zoneId);
+    if (!nullToAbsent || previousConsumption != null) {
+      map['previous_consumption'] = Variable<int>(previousConsumption);
     }
     if (!nullToAbsent || newConsumption != null) {
       map['new_consumption'] = Variable<int>(newConsumption);
     }
-    if (!nullToAbsent || prevConsumption != null) {
-      map['prev_consumption'] = Variable<int>(prevConsumption);
-    }
-    if (!nullToAbsent || totalConsumption != null) {
-      map['total_consumption'] = Variable<int>(totalConsumption);
+    if (!nullToAbsent || usageConsumption != null) {
+      map['usage_consumption'] = Variable<int>(usageConsumption);
     }
     return map;
   }
@@ -425,26 +479,26 @@ class CustomerModelData extends DataClass
     return CustomerModelCompanion(
       id: Value(id),
       name: Value(name),
-      khmerName: khmerName == null && nullToAbsent
+      meter:
+          meter == null && nullToAbsent ? const Value.absent() : Value(meter),
+      station: Value(station),
+      village: Value(village),
+      odooID:
+          odooID == null && nullToAbsent ? const Value.absent() : Value(odooID),
+      odooZoneId: Value(odooZoneId),
+      zone: Value(zone),
+      locationCode: locationCode == null && nullToAbsent
           ? const Value.absent()
-          : Value(khmerName),
-      locationId: locationId == null && nullToAbsent
+          : Value(locationCode),
+      previousConsumption: previousConsumption == null && nullToAbsent
           ? const Value.absent()
-          : Value(locationId),
-      zoneName: zoneName == null && nullToAbsent
-          ? const Value.absent()
-          : Value(zoneName),
-      zoneId:
-          zoneId == null && nullToAbsent ? const Value.absent() : Value(zoneId),
+          : Value(previousConsumption),
       newConsumption: newConsumption == null && nullToAbsent
           ? const Value.absent()
           : Value(newConsumption),
-      prevConsumption: prevConsumption == null && nullToAbsent
+      usageConsumption: usageConsumption == null && nullToAbsent
           ? const Value.absent()
-          : Value(prevConsumption),
-      totalConsumption: totalConsumption == null && nullToAbsent
-          ? const Value.absent()
-          : Value(totalConsumption),
+          : Value(usageConsumption),
     );
   }
 
@@ -454,13 +508,17 @@ class CustomerModelData extends DataClass
     return CustomerModelData(
       id: serializer.fromJson<int>(json['id']),
       name: serializer.fromJson<String>(json['name']),
-      khmerName: serializer.fromJson<String?>(json['khmerName']),
-      locationId: serializer.fromJson<int?>(json['locationId']),
-      zoneName: serializer.fromJson<String?>(json['zoneName']),
-      zoneId: serializer.fromJson<int?>(json['zoneId']),
+      meter: serializer.fromJson<String?>(json['meter']),
+      station: serializer.fromJson<String>(json['station']),
+      village: serializer.fromJson<String>(json['village']),
+      odooID: serializer.fromJson<int?>(json['odooID']),
+      odooZoneId: serializer.fromJson<int>(json['odooZoneId']),
+      zone: serializer.fromJson<String>(json['zone']),
+      locationCode: serializer.fromJson<String?>(json['locationCode']),
+      previousConsumption:
+          serializer.fromJson<int?>(json['previousConsumption']),
       newConsumption: serializer.fromJson<int?>(json['newConsumption']),
-      prevConsumption: serializer.fromJson<int?>(json['prevConsumption']),
-      totalConsumption: serializer.fromJson<int?>(json['totalConsumption']),
+      usageConsumption: serializer.fromJson<int?>(json['usageConsumption']),
     );
   }
   @override
@@ -469,152 +527,205 @@ class CustomerModelData extends DataClass
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'name': serializer.toJson<String>(name),
-      'khmerName': serializer.toJson<String?>(khmerName),
-      'locationId': serializer.toJson<int?>(locationId),
-      'zoneName': serializer.toJson<String?>(zoneName),
-      'zoneId': serializer.toJson<int?>(zoneId),
+      'meter': serializer.toJson<String?>(meter),
+      'station': serializer.toJson<String>(station),
+      'village': serializer.toJson<String>(village),
+      'odooID': serializer.toJson<int?>(odooID),
+      'odooZoneId': serializer.toJson<int>(odooZoneId),
+      'zone': serializer.toJson<String>(zone),
+      'locationCode': serializer.toJson<String?>(locationCode),
+      'previousConsumption': serializer.toJson<int?>(previousConsumption),
       'newConsumption': serializer.toJson<int?>(newConsumption),
-      'prevConsumption': serializer.toJson<int?>(prevConsumption),
-      'totalConsumption': serializer.toJson<int?>(totalConsumption),
+      'usageConsumption': serializer.toJson<int?>(usageConsumption),
     };
   }
 
   CustomerModelData copyWith(
           {int? id,
           String? name,
-          Value<String?> khmerName = const Value.absent(),
-          Value<int?> locationId = const Value.absent(),
-          Value<String?> zoneName = const Value.absent(),
-          Value<int?> zoneId = const Value.absent(),
+          Value<String?> meter = const Value.absent(),
+          String? station,
+          String? village,
+          Value<int?> odooID = const Value.absent(),
+          int? odooZoneId,
+          String? zone,
+          Value<String?> locationCode = const Value.absent(),
+          Value<int?> previousConsumption = const Value.absent(),
           Value<int?> newConsumption = const Value.absent(),
-          Value<int?> prevConsumption = const Value.absent(),
-          Value<int?> totalConsumption = const Value.absent()}) =>
+          Value<int?> usageConsumption = const Value.absent()}) =>
       CustomerModelData(
         id: id ?? this.id,
         name: name ?? this.name,
-        khmerName: khmerName.present ? khmerName.value : this.khmerName,
-        locationId: locationId.present ? locationId.value : this.locationId,
-        zoneName: zoneName.present ? zoneName.value : this.zoneName,
-        zoneId: zoneId.present ? zoneId.value : this.zoneId,
+        meter: meter.present ? meter.value : this.meter,
+        station: station ?? this.station,
+        village: village ?? this.village,
+        odooID: odooID.present ? odooID.value : this.odooID,
+        odooZoneId: odooZoneId ?? this.odooZoneId,
+        zone: zone ?? this.zone,
+        locationCode:
+            locationCode.present ? locationCode.value : this.locationCode,
+        previousConsumption: previousConsumption.present
+            ? previousConsumption.value
+            : this.previousConsumption,
         newConsumption:
             newConsumption.present ? newConsumption.value : this.newConsumption,
-        prevConsumption: prevConsumption.present
-            ? prevConsumption.value
-            : this.prevConsumption,
-        totalConsumption: totalConsumption.present
-            ? totalConsumption.value
-            : this.totalConsumption,
+        usageConsumption: usageConsumption.present
+            ? usageConsumption.value
+            : this.usageConsumption,
       );
   @override
   String toString() {
     return (StringBuffer('CustomerModelData(')
           ..write('id: $id, ')
           ..write('name: $name, ')
-          ..write('khmerName: $khmerName, ')
-          ..write('locationId: $locationId, ')
-          ..write('zoneName: $zoneName, ')
-          ..write('zoneId: $zoneId, ')
+          ..write('meter: $meter, ')
+          ..write('station: $station, ')
+          ..write('village: $village, ')
+          ..write('odooID: $odooID, ')
+          ..write('odooZoneId: $odooZoneId, ')
+          ..write('zone: $zone, ')
+          ..write('locationCode: $locationCode, ')
+          ..write('previousConsumption: $previousConsumption, ')
           ..write('newConsumption: $newConsumption, ')
-          ..write('prevConsumption: $prevConsumption, ')
-          ..write('totalConsumption: $totalConsumption')
+          ..write('usageConsumption: $usageConsumption')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, name, khmerName, locationId, zoneName,
-      zoneId, newConsumption, prevConsumption, totalConsumption);
+  int get hashCode => Object.hash(
+      id,
+      name,
+      meter,
+      station,
+      village,
+      odooID,
+      odooZoneId,
+      zone,
+      locationCode,
+      previousConsumption,
+      newConsumption,
+      usageConsumption);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is CustomerModelData &&
           other.id == this.id &&
           other.name == this.name &&
-          other.khmerName == this.khmerName &&
-          other.locationId == this.locationId &&
-          other.zoneName == this.zoneName &&
-          other.zoneId == this.zoneId &&
+          other.meter == this.meter &&
+          other.station == this.station &&
+          other.village == this.village &&
+          other.odooID == this.odooID &&
+          other.odooZoneId == this.odooZoneId &&
+          other.zone == this.zone &&
+          other.locationCode == this.locationCode &&
+          other.previousConsumption == this.previousConsumption &&
           other.newConsumption == this.newConsumption &&
-          other.prevConsumption == this.prevConsumption &&
-          other.totalConsumption == this.totalConsumption);
+          other.usageConsumption == this.usageConsumption);
 }
 
 class CustomerModelCompanion extends UpdateCompanion<CustomerModelData> {
   final Value<int> id;
   final Value<String> name;
-  final Value<String?> khmerName;
-  final Value<int?> locationId;
-  final Value<String?> zoneName;
-  final Value<int?> zoneId;
+  final Value<String?> meter;
+  final Value<String> station;
+  final Value<String> village;
+  final Value<int?> odooID;
+  final Value<int> odooZoneId;
+  final Value<String> zone;
+  final Value<String?> locationCode;
+  final Value<int?> previousConsumption;
   final Value<int?> newConsumption;
-  final Value<int?> prevConsumption;
-  final Value<int?> totalConsumption;
+  final Value<int?> usageConsumption;
   const CustomerModelCompanion({
     this.id = const Value.absent(),
     this.name = const Value.absent(),
-    this.khmerName = const Value.absent(),
-    this.locationId = const Value.absent(),
-    this.zoneName = const Value.absent(),
-    this.zoneId = const Value.absent(),
+    this.meter = const Value.absent(),
+    this.station = const Value.absent(),
+    this.village = const Value.absent(),
+    this.odooID = const Value.absent(),
+    this.odooZoneId = const Value.absent(),
+    this.zone = const Value.absent(),
+    this.locationCode = const Value.absent(),
+    this.previousConsumption = const Value.absent(),
     this.newConsumption = const Value.absent(),
-    this.prevConsumption = const Value.absent(),
-    this.totalConsumption = const Value.absent(),
+    this.usageConsumption = const Value.absent(),
   });
   CustomerModelCompanion.insert({
     this.id = const Value.absent(),
     required String name,
-    this.khmerName = const Value.absent(),
-    this.locationId = const Value.absent(),
-    this.zoneName = const Value.absent(),
-    this.zoneId = const Value.absent(),
+    this.meter = const Value.absent(),
+    required String station,
+    required String village,
+    this.odooID = const Value.absent(),
+    required int odooZoneId,
+    required String zone,
+    this.locationCode = const Value.absent(),
+    this.previousConsumption = const Value.absent(),
     this.newConsumption = const Value.absent(),
-    this.prevConsumption = const Value.absent(),
-    this.totalConsumption = const Value.absent(),
-  }) : name = Value(name);
+    this.usageConsumption = const Value.absent(),
+  })  : name = Value(name),
+        station = Value(station),
+        village = Value(village),
+        odooZoneId = Value(odooZoneId),
+        zone = Value(zone);
   static Insertable<CustomerModelData> custom({
     Expression<int>? id,
     Expression<String>? name,
-    Expression<String>? khmerName,
-    Expression<int>? locationId,
-    Expression<String>? zoneName,
-    Expression<int>? zoneId,
+    Expression<String>? meter,
+    Expression<String>? station,
+    Expression<String>? village,
+    Expression<int>? odooID,
+    Expression<int>? odooZoneId,
+    Expression<String>? zone,
+    Expression<String>? locationCode,
+    Expression<int>? previousConsumption,
     Expression<int>? newConsumption,
-    Expression<int>? prevConsumption,
-    Expression<int>? totalConsumption,
+    Expression<int>? usageConsumption,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (name != null) 'name': name,
-      if (khmerName != null) 'khmer_name': khmerName,
-      if (locationId != null) 'location_id': locationId,
-      if (zoneName != null) 'zone_name': zoneName,
-      if (zoneId != null) 'zone_id': zoneId,
+      if (meter != null) 'meter_id': meter,
+      if (station != null) 'station': station,
+      if (village != null) 'village': village,
+      if (odooID != null) 'odoo_id': odooID,
+      if (odooZoneId != null) 'odoo_zone_id': odooZoneId,
+      if (zone != null) 'zone': zone,
+      if (locationCode != null) 'location_code': locationCode,
+      if (previousConsumption != null)
+        'previous_consumption': previousConsumption,
       if (newConsumption != null) 'new_consumption': newConsumption,
-      if (prevConsumption != null) 'prev_consumption': prevConsumption,
-      if (totalConsumption != null) 'total_consumption': totalConsumption,
+      if (usageConsumption != null) 'usage_consumption': usageConsumption,
     });
   }
 
   CustomerModelCompanion copyWith(
       {Value<int>? id,
       Value<String>? name,
-      Value<String?>? khmerName,
-      Value<int?>? locationId,
-      Value<String?>? zoneName,
-      Value<int?>? zoneId,
+      Value<String?>? meter,
+      Value<String>? station,
+      Value<String>? village,
+      Value<int?>? odooID,
+      Value<int>? odooZoneId,
+      Value<String>? zone,
+      Value<String?>? locationCode,
+      Value<int?>? previousConsumption,
       Value<int?>? newConsumption,
-      Value<int?>? prevConsumption,
-      Value<int?>? totalConsumption}) {
+      Value<int?>? usageConsumption}) {
     return CustomerModelCompanion(
       id: id ?? this.id,
       name: name ?? this.name,
-      khmerName: khmerName ?? this.khmerName,
-      locationId: locationId ?? this.locationId,
-      zoneName: zoneName ?? this.zoneName,
-      zoneId: zoneId ?? this.zoneId,
+      meter: meter ?? this.meter,
+      station: station ?? this.station,
+      village: village ?? this.village,
+      odooID: odooID ?? this.odooID,
+      odooZoneId: odooZoneId ?? this.odooZoneId,
+      zone: zone ?? this.zone,
+      locationCode: locationCode ?? this.locationCode,
+      previousConsumption: previousConsumption ?? this.previousConsumption,
       newConsumption: newConsumption ?? this.newConsumption,
-      prevConsumption: prevConsumption ?? this.prevConsumption,
-      totalConsumption: totalConsumption ?? this.totalConsumption,
+      usageConsumption: usageConsumption ?? this.usageConsumption,
     );
   }
 
@@ -627,26 +738,35 @@ class CustomerModelCompanion extends UpdateCompanion<CustomerModelData> {
     if (name.present) {
       map['name'] = Variable<String>(name.value);
     }
-    if (khmerName.present) {
-      map['khmer_name'] = Variable<String>(khmerName.value);
+    if (meter.present) {
+      map['meter_id'] = Variable<String>(meter.value);
     }
-    if (locationId.present) {
-      map['location_id'] = Variable<int>(locationId.value);
+    if (station.present) {
+      map['station'] = Variable<String>(station.value);
     }
-    if (zoneName.present) {
-      map['zone_name'] = Variable<String>(zoneName.value);
+    if (village.present) {
+      map['village'] = Variable<String>(village.value);
     }
-    if (zoneId.present) {
-      map['zone_id'] = Variable<int>(zoneId.value);
+    if (odooID.present) {
+      map['odoo_id'] = Variable<int>(odooID.value);
+    }
+    if (odooZoneId.present) {
+      map['odoo_zone_id'] = Variable<int>(odooZoneId.value);
+    }
+    if (zone.present) {
+      map['zone'] = Variable<String>(zone.value);
+    }
+    if (locationCode.present) {
+      map['location_code'] = Variable<String>(locationCode.value);
+    }
+    if (previousConsumption.present) {
+      map['previous_consumption'] = Variable<int>(previousConsumption.value);
     }
     if (newConsumption.present) {
       map['new_consumption'] = Variable<int>(newConsumption.value);
     }
-    if (prevConsumption.present) {
-      map['prev_consumption'] = Variable<int>(prevConsumption.value);
-    }
-    if (totalConsumption.present) {
-      map['total_consumption'] = Variable<int>(totalConsumption.value);
+    if (usageConsumption.present) {
+      map['usage_consumption'] = Variable<int>(usageConsumption.value);
     }
     return map;
   }
@@ -656,13 +776,16 @@ class CustomerModelCompanion extends UpdateCompanion<CustomerModelData> {
     return (StringBuffer('CustomerModelCompanion(')
           ..write('id: $id, ')
           ..write('name: $name, ')
-          ..write('khmerName: $khmerName, ')
-          ..write('locationId: $locationId, ')
-          ..write('zoneName: $zoneName, ')
-          ..write('zoneId: $zoneId, ')
+          ..write('meter: $meter, ')
+          ..write('station: $station, ')
+          ..write('village: $village, ')
+          ..write('odooID: $odooID, ')
+          ..write('odooZoneId: $odooZoneId, ')
+          ..write('zone: $zone, ')
+          ..write('locationCode: $locationCode, ')
+          ..write('previousConsumption: $previousConsumption, ')
           ..write('newConsumption: $newConsumption, ')
-          ..write('prevConsumption: $prevConsumption, ')
-          ..write('totalConsumption: $totalConsumption')
+          ..write('usageConsumption: $usageConsumption')
           ..write(')'))
         .toString();
   }
