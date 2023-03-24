@@ -55,8 +55,11 @@ class AppDb extends _$AppDb {
   Future<List<CustomerModelData>> getCustomers() async {
     return await (select(customerModel)..orderBy([(t) => OrderingTerm(expression: t.locationCode)])).get();
   }
-  Future<List<CustomerModelData>> getCustomerByZone(int zoneId) async {
-    return await (select(customerModel)..where((tbl) => tbl.odooZoneId.equals(zoneId))).get();
+  Future<List<CustomerModelData>> getCustomerByZone(String zoneId) async {
+    return await (select(customerModel)..where((tbl) => tbl.zone.equals(zoneId) & tbl.newConsumption.equals(0))).get();
+  }
+  Future<List<CustomerModelData>> getCustomerByZoneDoneRead(String zoneName) async {
+    return await (select(customerModel)..where((tbl) => tbl.zone.equals(zoneName) & tbl.newConsumption.isBiggerThan(0 as Expression<int>))).get();
   }
   Stream<List<CustomerModelData>> getCustomersStream() {
     return select(customerModel).watch();

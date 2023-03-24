@@ -37,7 +37,7 @@ class CustomerProvider extends ChangeNotifier {
     });
     notifyListeners();
   }
-  void getCustomerByZone(int zoneId){
+  void getCustomerByZone(String zoneId){
     _appDb?.getCustomerByZone(zoneId).then((value) {
       _customerByZoneList = value;
       notifyListeners();
