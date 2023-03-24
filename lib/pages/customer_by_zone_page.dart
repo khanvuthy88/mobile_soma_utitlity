@@ -34,48 +34,53 @@ class _CustomerByZonePageState extends State<CustomerByZonePage> {
               }, icon: const Icon(Icons.checklist))
             ],
           ),
-          body: FutureBuilder<List<CustomerModelData>>(
-            future: Provider.of<AppDb>(context).getCustomerByZone(widget.zoneName),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                List<CustomerModelData>? customerList = snapshot.data;
-                return ListView.builder(
-                  itemCount: customerList?.length,
-                  itemBuilder: (context, index) {
-                    final customer = customerList![index];
-                    return Card(
-                      color: customer.newConsumption != 0 ? Colors.blue.shade200 : Colors.white,
-                      child: ListTile(
-                        leading: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(customer.name),
-                            Text(customer.meter.toString()),
-                          ],
-                        ),
-                        title: Text(customer.village),
-                        subtitle: Text(customer.zone),
-                        trailing: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Text('អំណានថ្មី: ${customer.newConsumption}'),
-                            Text('អំណានចាស់: ${customer.previousConsumption}'),
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                );
-              }else{
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-            },
-          ),
+          body: _buildCustomerList(context, widget.zoneName)
       );
   }
 }
 
+StreamBuilder<List<CustomerModelData>> _buildCustomerList(BuildContext context, String zoneNme){
+  final db = Provider.of<AppDb>(context);
+  return StreamBuilder(
+    stream: db.getCustomerSteamByZone(zoneNme),
+    builder: (context, snapshot) {
+      final customerList = snapshot.data ?? [];
+      return ListView.builder(
+        itemCount: customerList.length,
+        itemBuilder: ((context, index) {
+          final customer = customerList[index];
+          return _buildListItem(customer, db);
+        })
+      );
+    },
+  );
+}
+
+Widget _buildListItem(CustomerModelData customer, AppDb db){
+  return Card(
+    color: customer.newConsumption != 0 ? Colors.blue.shade200 : Colors.white,
+    child: ListTile(
+      onTap: (){
+        debugPrint("Clicked ${customer.name}");
+      },
+      leading: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(customer.name),
+          Text(customer.meter.toString()),
+        ],
+      ),
+      title: Text(customer.village),
+      subtitle: Text(customer.zone),
+      trailing: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Text('អំណានថ្មី: ${customer.newConsumption}'),
+          Text('អំណានចាស់: ${customer.previousConsumption}'),
+        ],
+      ),
+    ),
+  );
+}
