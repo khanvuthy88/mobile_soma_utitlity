@@ -58,8 +58,8 @@ class AppDb extends _$AppDb {
   Future<List<CustomerModelData>> getCustomerByZone(String zoneId) async {
     return await (select(customerModel)..where((tbl) => tbl.zone.equals(zoneId) & tbl.newConsumption.equals(0))).get();
   }
-  Future<List<CustomerModelData>> getCustomerByZoneDoneRead(String zoneName) async {
-    return await (select(customerModel)..where((tbl) => tbl.zone.equals(zoneName) & tbl.newConsumption.isBiggerThan(0 as Expression<int>))).get();
+  Stream<List<CustomerModelData>> getCustomerByZoneDoneRead(String zoneName) {
+    return (select(customerModel)..where((tbl) => tbl.zone.equals(zoneName) & tbl.newConsumption.isNotValue(0))).watch();
   }
   Stream<List<CustomerModelData>> getCustomerSteamByZone(String zoneName){
     return (select(customerModel)..where((tbl) => tbl.zone.equals(zoneName) & tbl.newConsumption.equals(0))).watch();
